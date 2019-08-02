@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-
 namespace Keycloak.Net.Tests
 {
-    public partial class KeycloakClientShould
+    public class AttackDetetionShould : KeycloakClientShould
     {
         [Theory]
         [InlineData("Insurance", "vermeulen")]

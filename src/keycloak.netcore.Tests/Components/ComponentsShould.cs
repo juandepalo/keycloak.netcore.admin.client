@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Keycloak.Net.Tests
 {
-    public partial class KeycloakClientShould
+    public class ComponentsShould : KeycloakClientShould
     {
         [Theory]
         [InlineData("Insurance")]

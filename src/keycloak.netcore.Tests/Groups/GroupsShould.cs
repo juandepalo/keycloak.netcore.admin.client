@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Keycloak.Net.Tests
 {
-    public partial class KeycloakClientShould
+    public class GroupsShould : KeycloakClientShould
     {
         [Theory]
         [InlineData("Insurance")]
@@ -34,7 +34,7 @@ namespace Keycloak.Net.Tests
                 Assert.NotNull(result);
             }
         }
-        
+
         [Theory]
         [InlineData("Insurance")]
         public async Task GetGroupClientAuthorizationPermissionsInitializedAsync(string realm)

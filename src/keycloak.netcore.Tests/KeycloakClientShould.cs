@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Keycloak.Net.Tests
 {
-    public partial class KeycloakClientShould
+    public class KeycloakClientShould
     {
         private readonly KeycloakClient _client;
 
