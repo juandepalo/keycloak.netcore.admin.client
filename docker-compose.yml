@@ -21,7 +21,7 @@ services:
 
   keycloak:
     image: jboss/keycloak
-    container_name: keycloalocalhost
+    container_name: keycloakadmin
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: mysql

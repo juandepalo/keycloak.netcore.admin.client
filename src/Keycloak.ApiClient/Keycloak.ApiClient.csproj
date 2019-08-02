@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Keycloak.Authentication\Keycloak.Authentication.csproj" />
     <ProjectReference Include="..\keycloak.netcore\KeyCloak.NetCore.csproj" />
   </ItemGroup>
 

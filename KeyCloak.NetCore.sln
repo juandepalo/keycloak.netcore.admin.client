@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keycloak.ApiClient", "src\K
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9D346756-E6B3-4A59-B8EC-1B716BAC50E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keycloak.Authentication", "src\Keycloak.Authentication\Keycloak.Authentication.csproj", "{1B9DEB30-6B0E-4697-AF95-D97547B9D447}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,18 @@ Global
 		{9D346756-E6B3-4A59-B8EC-1B716BAC50E3}.Release|x64.Build.0 = Release|Any CPU
 		{9D346756-E6B3-4A59-B8EC-1B716BAC50E3}.Release|x86.ActiveCfg = Release|Any CPU
 		{9D346756-E6B3-4A59-B8EC-1B716BAC50E3}.Release|x86.Build.0 = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|x64.Build.0 = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Debug|x86.Build.0 = Debug|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|x64.Build.0 = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|x86.ActiveCfg = Release|Any CPU
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +93,7 @@ Global
 		{BF8AEBF8-2C2C-445D-867A-FDFB2BB4FBEE} = {A8B950B0-66F3-4FBA-BB1E-0DFDFD9CE102}
 		{C406C6D5-1DF8-448B-A123-55A14D51BBE2} = {A8B950B0-66F3-4FBA-BB1E-0DFDFD9CE102}
 		{D230AF5F-EB90-492D-927B-0614530EA31F} = {A8B950B0-66F3-4FBA-BB1E-0DFDFD9CE102}
+		{1B9DEB30-6B0E-4697-AF95-D97547B9D447} = {A8B950B0-66F3-4FBA-BB1E-0DFDFD9CE102}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3196FFA-732E-4399-890A-90DFBBB20F9C}

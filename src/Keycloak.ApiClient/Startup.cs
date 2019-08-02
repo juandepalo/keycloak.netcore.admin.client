@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Keycloak.ApiClient.Configurations;
 using Keycloak.ApiClient.Models;
+using Keycloak.Authentication;
+using Keycloak.Authentication.Configuration;
+using Keycloak.Authentication.Handlers.Requirements;
+using Keycloak.Authentication.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,9 +37,9 @@ namespace Keycloak.ApiClient
             .SetBasePath(env.ContentRootPath)
             .AddJsonFile("appsettings.json", true, true)
             .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
-                        Configuration = Configuration = builder.Build();
-                        Environment = env;
-                        token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
+            Configuration = Configuration = builder.Build();
+            Environment = env;
+            token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
         }
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Environment { get; }
@@ -68,61 +75,33 @@ namespace Keycloak.ApiClient
                 });
             });
             #endregion
+            #region autthentication-keycloak
 
-            #region Autentication
-            //  https://medium.com/@xavier.hahn/adding-authorization-to-asp-net-core-app-using-keycloak-c6c96ee0e655
-            services.AddAuthorization(options =>
+            services.AddKeycloakAuthentication(new KeycloakOptions
             {
-                // options.AddPolicy("Administrator", policy => policy.RequireClaim("user_roles", "[Administrator]"));
-                options.AddPolicy("SampleAdministrator", policy => policy.RequireClaim("user_roles", "[SampleAdministrator]"));
-
+                Realm = token.Realm,
+                ClientId = token.ClientId,
+                ClientSecret = token.Secret,
+                KeycloakUrl = token.Authority,
+                EnableGetTokenAuto = true,
+                EnableRefreshToken = true
             });
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(o =>
-            {
-
-                o.Authority = token.Authority;
-                o.Audience = token.Audience;
-                o.RequireHttpsMetadata = false;
-                o.SaveToken = true;
-                o.TokenValidationParameters = new TokenValidationParameters
+            // services.AddAuthorization();
+            services.AddAuthorization(
+                config =>
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
-                    ValidIssuer = token.Issuer,
-                    ValidAudience = token.Audience,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    config.AddPolicy("administrador", policy => policy.AddRequirements(new IAuthorizationRequirement[] { new HasRoleRequirement("adminitrador") }));
+                    config.AddPolicy("invitado", policy => policy.AddRequirements(new IAuthorizationRequirement[] { new HasRoleRequirement("invitado") }));
 
-                };
-                o.Events = new JwtBearerEvents()
-                {
-                    OnAuthenticationFailed = c =>
-                    {
-                        c.NoResult();
-                        c.Response.StatusCode = 500;
-                        c.Response.ContentType = "text/plain";
 
-                        if (Environment.IsDevelopment())
-                        {
-                            return c.Response.WriteAsync(c.Exception.ToString());
-                        }
+                    config.AddPolicy("administrador", new KeycloakRoleAuthorizationPolicy("administrador"));
+                    config.AddPolicy("invitado", new KeycloakRoleAuthorizationPolicy("invitado"));
+                    // config.AddPolicy("admin", policy => policy.RequireClaim("user_roles", "[admin]"));
 
-                        return c.Response.WriteAsync("An error occured processing your authentication.");
-                    }
-                };
-            });
-
+                }
+            );
 
             #endregion
-            // ASP.NET HttpContext dependency
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // ASP.NET Authorization Polices
-            //services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -142,7 +121,8 @@ namespace Keycloak.ApiClient
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseCookiePolicy();
-            app.UseAuthentication();
+            // app.UseAuthentication();
+            app.UseKeycloak(); //Habilitar la autenticación de Keycloak
             app.UseOpenApi();
             app.UseSwaggerUi3(settings =>
             {

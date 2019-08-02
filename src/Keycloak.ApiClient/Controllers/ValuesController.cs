@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Keycloak.ApiClient.Controllers
@@ -12,6 +13,8 @@ namespace Keycloak.ApiClient.Controllers
     {
         // GET api/values
         [HttpGet]
+        [Authorize]
+        [Authorize(Policy = "invitado")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
@@ -19,6 +22,8 @@ namespace Keycloak.ApiClient.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "administrador")]
+
         public ActionResult<string> Get(int id)
         {
             return "value";
