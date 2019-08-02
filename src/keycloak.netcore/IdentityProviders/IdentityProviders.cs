@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.IdentityProviders;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.IdentityProviders
 {
-    public partial class KeycloakClient
+    public  class IdentityProviders: KeycloakClient
     {
+        public IdentityProviders(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public IdentityProviders(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<IDictionary<string, object>> ImportIdentityProviderAsync(string realm, string input) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/import-config")
             .PostMultipartAsync(content => content.AddFile(Path.GetFileName(input), Path.GetDirectoryName(input)))
@@ -60,19 +69,19 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
             return response.IsSuccessStatusCode;
         }
-        
+
         public async Task<ManagementPermission> GetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/instances/{identityProviderAlias}/management/permissions")
             .GetJsonAsync<ManagementPermission>()
             .ConfigureAwait(false);
 
-        public async Task<ManagementPermission> SetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias, ManagementPermission managementPermission) => 
+        public async Task<ManagementPermission> SetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias, ManagementPermission managementPermission) =>
             await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/identity-provider/instances/{identityProviderAlias}/management/permissions")
                 .PutJsonAsync(managementPermission)
                 .ReceiveJson<ManagementPermission>()
                 .ConfigureAwait(false);
-        
+
         public async Task<IDictionary<string, object>> GetIdentityProviderMapperTypesAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/instances/{identityProviderAlias}/mapper-types")
             .GetJsonAsync<IDictionary<string, object>>()
@@ -86,12 +95,12 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
             return response.IsSuccessStatusCode;
         }
-        
+
         public async Task<IEnumerable<IdentityProviderMapper>> GetIdentityProviderMappersAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/instances/{identityProviderAlias}/mappers")
             .GetJsonAsync<IEnumerable<IdentityProviderMapper>>()
             .ConfigureAwait(false);
-        
+
         public async Task<IdentityProviderMapper> GetIdentityProviderMapperByIdAsync(string realm, string identityProviderAlias, string mapperId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/instances/{identityProviderAlias}/mappers/{mapperId}")
             .GetJsonAsync<IdentityProviderMapper>()

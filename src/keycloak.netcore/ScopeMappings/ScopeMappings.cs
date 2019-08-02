@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.Roles;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.ScopeMappings
 {
-    public partial class KeycloakClient
+    public class ScopeMappings : KeycloakClient
     {
+        public ScopeMappings(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public ScopeMappings(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<Mapping> GetScopeMappingsAsync(string realm, string clientScopeId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/client-scopes/{clientScopeId}/scope-mappings")
             .GetJsonAsync<Mapping>()

@@ -11,10 +11,18 @@ using Keycloak.Net.Models.Roles;
 using Keycloak.Net.Models.Root;
 using Keycloak.Net.Models.Users;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Clients
 {
-    public partial class KeycloakClient
+    public class Clients : KeycloakClient
     {
+        public Clients(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public Clients(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateClientAsync(string realm, Client client)
         {
             var response = await GetBaseUrl(realm)
@@ -82,14 +90,14 @@ namespace Keycloak.Net
         {
             var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/default-client-scopes/{clientScopeId}")
-                .PutAsync(new StringContent(""))                                               
-                .ConfigureAwait(false);                                                            
-            return response.IsSuccessStatusCode;                                                   
-        }                                                                                          
-                                                                                                   
+                .PutAsync(new StringContent(""))
+                .ConfigureAwait(false);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<bool> DeleteDefaultClientScopeAsync(string realm, string clientId, string clientScopeId)
-        {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+        {
+            var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/default-client-scopes/{clientScopeId}")
                 .DeleteAsync()
                 .ConfigureAwait(false);
@@ -159,13 +167,13 @@ namespace Keycloak.Net
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/installation/providers/{providerId}")
             .GetStringAsync()
             .ConfigureAwait(false);
-        
+
         public async Task<ManagementPermission> GetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/management/permissions")
             .GetJsonAsync<ManagementPermission>()
             .ConfigureAwait(false);
 
-        public async Task<ManagementPermission> SetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId, ManagementPermission managementPermission) => 
+        public async Task<ManagementPermission> SetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId, ManagementPermission managementPermission) =>
             await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/management/permissions")
                 .PutJsonAsync(managementPermission)
@@ -176,14 +184,14 @@ namespace Keycloak.Net
         {
             var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/nodes")
-                .PostJsonAsync(formParams)                                               
-                .ConfigureAwait(false);                                                            
-            return response.IsSuccessStatusCode;                                                   
-        }                                                                                          
-                                                                                                   
+                .PostJsonAsync(formParams)
+                .ConfigureAwait(false);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<bool> UnregisterClientClusterNodeAsync(string realm, string clientId)
-        {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+        {
+            var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/nodes")
                 .DeleteAsync()
                 .ConfigureAwait(false);
@@ -214,7 +222,7 @@ namespace Keycloak.Net
                 .GetJsonAsync<IEnumerable<UserSession>>()
                 .ConfigureAwait(false);
         }
-        
+
         public async Task<IEnumerable<ClientScope>> GetOptionalClientScopesAsync(string realm, string clientId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/optional-client-scopes")
             .GetJsonAsync<IEnumerable<ClientScope>>()
@@ -224,14 +232,14 @@ namespace Keycloak.Net
         {
             var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/optional-client-scopes/{clientScopeId}")
-                .PutAsync(new StringContent(""))                                               
-                .ConfigureAwait(false);                                                            
-            return response.IsSuccessStatusCode;                                                   
-        }                                                                                          
-                                                                                                   
+                .PutAsync(new StringContent(""))
+                .ConfigureAwait(false);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<bool> DeleteOptionalClientScopeAsync(string realm, string clientId, string clientScopeId)
-        {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+        {
+            var response = await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/optional-client-scopes/{clientScopeId}")
                 .DeleteAsync()
                 .ConfigureAwait(false);
@@ -268,7 +276,7 @@ namespace Keycloak.Net
 
         public async Task<GlobalRequestResult> TestClientClusterNodesAvailableAsync(string realm, string clientId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/test-nodes-available")
-            .GetJsonAsync<GlobalRequestResult>()                                               
+            .GetJsonAsync<GlobalRequestResult>()
             .ConfigureAwait(false);
 
         public async Task<IEnumerable<UserSession>> GetClientUserSessionsAsync(string realm, string clientId, int? first = null, int? max = null)

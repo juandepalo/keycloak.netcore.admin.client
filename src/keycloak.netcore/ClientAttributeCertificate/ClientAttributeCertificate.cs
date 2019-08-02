@@ -1,13 +1,22 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.ClientAttributeCertificate;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.ClientAttributeCertificate
 {
-    public partial class KeycloakClient
+    public class ClientAttributeCertificate : KeycloakClient
     {
+        public ClientAttributeCertificate(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public ClientAttributeCertificate(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<Certificate> GetKeyInfoAsync(string realm, string clientId, string attribute) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/certificates/{attribute}")
             .GetJsonAsync<Certificate>()

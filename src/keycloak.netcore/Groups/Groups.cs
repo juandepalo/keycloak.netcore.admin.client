@@ -7,10 +7,18 @@ using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.Groups;
 using Keycloak.Net.Models.Users;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Groups
 {
-    public partial class KeycloakClient
+    public class Groups : KeycloakClient
     {
+        public Groups(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public Groups(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateGroupAsync(string realm, Group group)
         {
             var response = await GetBaseUrl(realm)
@@ -95,7 +103,7 @@ namespace Keycloak.Net
             .GetJsonAsync<ManagementPermission>()
             .ConfigureAwait(false);
 
-        public async Task<ManagementPermission> SetGroupClientAuthorizationPermissionsInitializedAsync(string realm, string groupId, ManagementPermission managementPermission) => 
+        public async Task<ManagementPermission> SetGroupClientAuthorizationPermissionsInitializedAsync(string realm, string groupId, ManagementPermission managementPermission) =>
             await GetBaseUrl(realm)
                 .AppendPathSegment($"/admin/realms/{realm}/groups/{groupId}/management/permissions")
                 .PutJsonAsync(managementPermission)

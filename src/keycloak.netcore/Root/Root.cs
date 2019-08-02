@@ -1,11 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Root;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Root
 {
-    public partial class KeycloakClient
+    public class Root : KeycloakClient
     {
+        public Root(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public Root(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<ServerInfo> GetServerInfoAsync(string realm) => await GetBaseUrl(realm)
             .AppendPathSegment("/admin/serverinfo/")
             .GetJsonAsync<ServerInfo>()

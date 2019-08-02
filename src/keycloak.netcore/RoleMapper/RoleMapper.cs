@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.Roles;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.RoleMapper
 {
-    public partial class KeycloakClient
+    public class RoleMapper : KeycloakClient
     {
+        public RoleMapper(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public RoleMapper(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<Mapping> GetRoleMappingsForGroupAsync(string realm, string groupId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/groups/{groupId}/role-mappings")
             .GetJsonAsync<Mapping>()

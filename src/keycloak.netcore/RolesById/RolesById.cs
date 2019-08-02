@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
@@ -7,10 +8,18 @@ using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.Roles;
 using Newtonsoft.Json;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.RolesById
 {
-    public partial class KeycloakClient
+    public class RolesById : KeycloakClient
     {
+        public RolesById(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public RolesById(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<Role> GetRoleByIdAsync(string realm, string roleId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/roles-by-id/{roleId}")
             .GetJsonAsync<Role>()

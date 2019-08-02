@@ -8,7 +8,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Keycloak.Net
 {
-    public partial class KeycloakClient
+    public class KeycloakClient
     {
         private static readonly ISerializer s_serializer = new NewtonsoftJsonSerializer(new JsonSerializerSettings
         {
@@ -47,8 +47,8 @@ namespace Keycloak.Net
         {
             _getToken = getToken;
         }
-        
-        private IFlurlRequest GetBaseUrl(string authenticationRealm) => new Url(_url)
+
+        public IFlurlRequest GetBaseUrl(string authenticationRealm) => new Url(_url)
             .AppendPathSegment("/auth")
             .ConfigureRequest(settings => settings.JsonSerializer = s_serializer)
             .WithAuthentication(_getToken, _url, authenticationRealm, _userName, _password);

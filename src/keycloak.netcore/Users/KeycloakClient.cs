@@ -7,10 +7,18 @@ using Keycloak.Net.Common.Extensions;
 using Keycloak.Net.Models.Groups;
 using Keycloak.Net.Models.Users;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Users
 {
-    public partial class KeycloakClient
+    public class KeycloakClient : Net.KeycloakClient
     {
+        public KeycloakClient(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public KeycloakClient(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateUserAsync(string realm, User user)
         {
             var response = await GetBaseUrl(realm)

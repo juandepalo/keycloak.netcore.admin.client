@@ -8,10 +8,18 @@ using Keycloak.Net.Models.Groups;
 using Keycloak.Net.Models.Roles;
 using Keycloak.Net.Models.Users;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Roles
 {
-    public partial class KeycloakClient
+    public class Roles : KeycloakClient
     {
+        public Roles(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public Roles(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateRoleAsync(string realm, string clientId, Role role)
         {
             var response = await GetBaseUrl(realm)
@@ -30,7 +38,7 @@ namespace Keycloak.Net
             .AppendPathSegment($"/admin/realms/{realm}/clients/{clientId}/roles/{roleName}")
             .GetJsonAsync<Role>()
             .ConfigureAwait(false);
-        
+
         public async Task<bool> UpdateRoleByNameAsync(string realm, string clientId, string roleName, Role role)
         {
             var response = await GetBaseUrl(realm)
@@ -143,7 +151,7 @@ namespace Keycloak.Net
             .AppendPathSegment($"/admin/realms/{realm}/roles/{roleName}")
             .GetJsonAsync<Role>()
             .ConfigureAwait(false);
-        
+
         public async Task<bool> UpdateRoleByNameAsync(string realm, string roleName, Role role)
         {
             var response = await GetBaseUrl(realm)

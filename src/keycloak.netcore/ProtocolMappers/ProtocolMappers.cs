@@ -1,12 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.ProtocolMappers;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.ProtocolMappers
 {
-    public partial class KeycloakClient
+    public class ProtocolMappers : KeycloakClient
     {
+        public ProtocolMappers(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public ProtocolMappers(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateMultipleProtocolMappersAsync(string realm, string clientScopeId, IEnumerable<ProtocolMapper> protocolMapperRepresentations)
         {
             var response = await GetBaseUrl(realm)

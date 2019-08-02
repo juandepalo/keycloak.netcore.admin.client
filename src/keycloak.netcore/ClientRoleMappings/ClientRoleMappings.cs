@@ -1,13 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Roles;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.ClientRoleMappings
 {
-    public partial class KeycloakClient
+    public class ClientRoleMappings : KeycloakClient
     {
+        public ClientRoleMappings(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public ClientRoleMappings(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> AddClientRoleMappingsToGroupAsync(string realm, string groupId, string clientId, IEnumerable<Role> roles)
         {
             var response = await GetBaseUrl(realm)

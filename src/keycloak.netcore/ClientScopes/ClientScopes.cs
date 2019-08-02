@@ -1,12 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.ClientScopes;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.ClientScopes
 {
-    public partial class KeycloakClient
+    public class ClientScopes : KeycloakClient
     {
+        public ClientScopes(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public ClientScopes(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateClientScopeAsync(string realm, ClientScope clientScope)
         {
             var response = await GetBaseUrl(realm)

@@ -1,12 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Keycloak.Net.Models.Components;
 
-namespace Keycloak.Net
+namespace Keycloak.Net.Components
 {
-    public partial class KeycloakClient
+    public class Components : KeycloakClient
     {
+        public Components(string url, string userName, string password) : base(url, userName, password)
+        {
+        }
+
+        public Components(string url, Func<string> getToken) : base(url, getToken)
+        {
+        }
+
         public async Task<bool> CreateComponentAsync(string realm, Component componentRepresentation)
         {
             var response = await GetBaseUrl(realm)
