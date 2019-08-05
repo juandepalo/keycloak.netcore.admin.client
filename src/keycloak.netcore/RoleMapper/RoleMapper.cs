@@ -8,15 +8,8 @@ using Keycloak.Net.Models.Roles;
 
 namespace Keycloak.Net.RoleMapper
 {
-    public class RoleMapper : KeycloakClient
+    public class RoleMapper : KeycloakClient, IRoleMapper
     {
-        public RoleMapper(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public RoleMapper(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<Mapping> GetRoleMappingsForGroupAsync(string realm, string groupId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/groups/{groupId}/role-mappings")

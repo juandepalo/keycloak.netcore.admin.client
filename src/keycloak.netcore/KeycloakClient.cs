@@ -1,14 +1,16 @@
 ﻿using System;
+using System.IO;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Configuration;
 using Keycloak.Net.Common.Extensions;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Keycloak.Net
 {
-    public class KeycloakClient
+    public class KeycloakClient : IKeycloakClient
     {
         private static readonly ISerializer s_serializer = new NewtonsoftJsonSerializer(new JsonSerializerSettings
         {
@@ -25,28 +27,51 @@ namespace Keycloak.Net
             };
         }
 
+        //public KeycloakClient(Url url, string userName, string password, Func<string> getToken)
+        //{
+        //    _url = url;
+        //    _userName = userName;
+        //    _password = password;
+        //    _getToken = getToken;
+        //}
+
+        public KeycloakClient()
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+
+            _url = configuration.GetSection("keycloak")["url"];
+            _userName = configuration.GetSection("keycloak")["userName"];
+            _password = configuration.GetSection("keycloak")["password"];
+
+        }
+
         private readonly Url _url;
         private readonly string _userName;
         private readonly string _password;
         private readonly Func<string> _getToken;
 
-        private KeycloakClient(string url)
-        {
-            _url = url;
-        }
 
-        public KeycloakClient(string url, string userName, string password)
-            : this(url)
-        {
-            _userName = userName;
-            _password = password;
-        }
+        //private KeycloakClient(string url)
+        //{
+        //    _url = url;
+        //}
 
-        public KeycloakClient(string url, Func<string> getToken)
-            : this(url)
-        {
-            _getToken = getToken;
-        }
+        //public KeycloakClient(string url, string userName, string password);
+        //{
+        //    _userName = userName;
+        //    _password = password;
+        //    _url = url;
+        //}
+
+        //public KeycloakClient(string url, Func<string> getToken)
+        //    : this(url)
+        //{
+        //    _getToken = getToken;
+        //}
 
         public IFlurlRequest GetBaseUrl(string authenticationRealm) => new Url(_url)
             .AppendPathSegment("/auth")

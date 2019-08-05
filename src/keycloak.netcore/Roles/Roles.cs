@@ -10,15 +10,8 @@ using Keycloak.Net.Models.Users;
 
 namespace Keycloak.Net.Roles
 {
-    public class Roles : KeycloakClient
+    public class Roles : KeycloakClient, IRoles
     {
-        public Roles(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public Roles(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<bool> CreateRoleAsync(string realm, string clientId, Role role)
         {

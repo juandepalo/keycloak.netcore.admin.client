@@ -11,16 +11,8 @@ using Keycloak.Net.Models.RealmsAdmin;
 
 namespace Keycloak.Net.RealmsAdmin
 {
-    public class RealmsAdmin : KeycloakClient
+    public class RealmsAdmin : KeycloakClient, IRealmsAdmin
     {
-        public RealmsAdmin(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public RealmsAdmin(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
-
         public async Task<bool> ImportRealmAsync(string realm, Realm rep)
         {
             var response = await GetBaseUrl(realm)

@@ -10,15 +10,9 @@ using Newtonsoft.Json;
 
 namespace Keycloak.Net.RolesById
 {
-    public class RolesById : KeycloakClient
+    public class RolesById : KeycloakClient, IRolesById
     {
-        public RolesById(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
 
-        public RolesById(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<Role> GetRoleByIdAsync(string realm, string roleId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/roles-by-id/{roleId}")

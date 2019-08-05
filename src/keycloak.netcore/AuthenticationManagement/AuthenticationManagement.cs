@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Models.AuthenticationManagement;
 
 namespace Keycloak.Net.AuthenticationManagement
 {
-    public  class AuthenticationManagement: KeycloakClient
+    public class AuthenticationManagement : KeycloakClient, IAuthenticationManagement
     {
-        public AuthenticationManagement(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public AuthenticationManagement(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
-
         public async Task<IEnumerable<IDictionary<string, object>>> GetAuthenticatorProvidersAsync(string realm) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/authentication/authenticator-providers")
             .GetJsonAsync<IEnumerable<IDictionary<string, object>>>()

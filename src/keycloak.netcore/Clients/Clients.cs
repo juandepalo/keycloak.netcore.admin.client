@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Common.Extensions;
 using Keycloak.Net.Models.Clients;
@@ -13,15 +14,8 @@ using Keycloak.Net.Models.Users;
 
 namespace Keycloak.Net.Clients
 {
-    public class Clients : KeycloakClient
+    public class Clients : KeycloakClient, IClients
     {
-        public Clients(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public Clients(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<bool> CreateClientAsync(string realm, Client client)
         {

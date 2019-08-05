@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Common.Extensions;
 using Keycloak.Net.Models.Common;
@@ -9,15 +10,8 @@ using Keycloak.Net.Models.Users;
 
 namespace Keycloak.Net.Groups
 {
-    public class Groups : KeycloakClient
+    public class Groups : KeycloakClient, IGroups
     {
-        public Groups(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public Groups(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<bool> CreateGroupAsync(string realm, Group group)
         {

@@ -13,7 +13,6 @@ namespace Keycloak.ApiClient.Controllers
     {
         // GET api/values
         [HttpGet]
-        [Authorize]
         [Authorize(Policy = "invitado")]
         public ActionResult<IEnumerable<string>> Get()
         {

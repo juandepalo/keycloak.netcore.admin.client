@@ -9,15 +9,9 @@ using Keycloak.Net.Models.Users;
 
 namespace Keycloak.Net.Users
 {
-    public class Users : KeycloakClient
+    public class Users : KeycloakClient, IUsers
     {
-        public Users(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public Users(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
+        
 
         public async Task<bool> CreateUserAsync(string realm, User user)
         {

@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Models.ClientInitialAccess;
 
 namespace Keycloak.Net.ClientInitialAccess
 {
-    public class ClientInitialAccess : KeycloakClient
+    public class ClientInitialAccess : KeycloakClient, IClientInitialAccess
     {
-        public ClientInitialAccess(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public ClientInitialAccess(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<ClientInitialAccessPresentation> CreateInitialAccessTokenAsync(string realm, ClientInitialAccessCreatePresentation create) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/clients-initial-access")

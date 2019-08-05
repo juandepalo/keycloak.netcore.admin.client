@@ -4,22 +4,16 @@ using Xunit;
 
 namespace Keycloak.Net.Tests
 {
-    public class UsersShould
+    public class UsersShould: KeycloakClientShould
     {
 
-        private Users.Users _client;
 
-        public UsersShould()
-        {
-            KeycloakClientShould keycloakClientShould = new KeycloakClientShould();
-            _client = new Users.Users(keycloakClientShould.Url, keycloakClientShould.UserName, keycloakClientShould.Password);
-        }
 
         [Theory]
         [InlineData("Insurance")]
         public async Task GetUsersAsync(string realm)
         {
-            var result = await _client.GetUsersAsync(realm);
+            var result = await UsersClient.GetUsersAsync(realm);
             Assert.NotNull(result);
         }
 
@@ -27,7 +21,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetUsersCountAsync(string realm)
         {
-            int? result = await _client.GetUsersCountAsync(realm);
+            int? result = await UsersClient.GetUsersCountAsync(realm);
             Assert.True(result >= 0);
         }
 
@@ -35,11 +29,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetUserAsync(string realm)
         {
-            var users = await _client.GetUsersAsync(realm);
+            var users = await UsersClient.GetUsersAsync(realm);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetUserAsync(realm, userId);
+                var result = await UsersClient.GetUserAsync(realm, userId);
                 Assert.NotNull(result);
                 Assert.Equal(userId, result.Id);
             }
@@ -49,11 +43,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance", "vermeulen")]
         public async Task GetUserSocialLoginsAsync(string realm, string search)
         {
-            var users = await _client.GetUsersAsync(realm, search: search);
+            var users = await UsersClient.GetUsersAsync(realm, search: search);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetUserSocialLoginsAsync(realm, userId);
+                var result = await UsersClient.GetUserSocialLoginsAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
@@ -62,11 +56,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance", "vermeulen")]
         public async Task GetUserGroupsAsync(string realm, string search)
         {
-            var users = await _client.GetUsersAsync(realm, search: search);
+            var users = await UsersClient.GetUsersAsync(realm, search: search);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetUserGroupsAsync(realm, userId);
+                var result = await UsersClient.GetUserGroupsAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
@@ -75,11 +69,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance", "vermeulen")]
         public async Task GetUserGroupsCountAsync(string realm, string search)
         {
-            var users = await _client.GetUsersAsync(realm, search: search);
+            var users = await UsersClient.GetUsersAsync(realm, search: search);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                int? result = await _client.GetUserGroupsCountAsync(realm, userId);
+                int? result = await UsersClient.GetUserGroupsCountAsync(realm, userId);
                 Assert.True(result >= 0);
             }
         }
@@ -88,11 +82,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance", "vermeulen")]
         public async Task GetUserSessionsAsync(string realm, string search)
         {
-            var users = await _client.GetUsersAsync(realm, search: search);
+            var users = await UsersClient.GetUsersAsync(realm, search: search);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetUserSessionsAsync(realm, userId);
+                var result = await UsersClient.GetUserSessionsAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }

@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Models.AttackDetection;
 
 namespace Keycloak.Net.AttackDetection
 {
-    public  class AttackDetection : KeycloakClient
+    public class AttackDetection : KeycloakClient, IAttackDetection
     {
-        public AttackDetection(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
-
-        public AttackDetection(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
 
         public async Task<bool> ClearUserLoginFailuresAsync(string realm)
         {

@@ -6,15 +6,8 @@ using Keycloak.Net.Models.UserStorageProvider;
 
 namespace Keycloak.Net.UserStorageProvider
 {
-    public class UserStorageProvider : KeycloakClient
+    public class UserStorageProvider : KeycloakClient, IUserStorageProvider
     {
-        public UserStorageProvider(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public UserStorageProvider(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         [Obsolete("Not working yet")]
         public async Task<bool> RemoveImportedUsersAsync(string realm, string storageProviderId)

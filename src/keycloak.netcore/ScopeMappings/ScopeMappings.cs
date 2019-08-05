@@ -8,15 +8,9 @@ using Keycloak.Net.Models.Roles;
 
 namespace Keycloak.Net.ScopeMappings
 {
-    public class ScopeMappings : KeycloakClient
+    public class ScopeMappings : KeycloakClient, IScopeMappings
     {
-        public ScopeMappings(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
 
-        public ScopeMappings(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<Mapping> GetScopeMappingsAsync(string realm, string clientScopeId) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/client-scopes/{clientScopeId}/scope-mappings")

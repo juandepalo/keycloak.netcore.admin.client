@@ -1,27 +1,26 @@
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Keycloak.Authentication.Clients;
+using Keycloak.Net.AttackDetection;
 
 namespace Keycloak.ApiClient.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class ManagementKeykloackController : ControllerBase
     {
+        public IAttackDetection AttackDetection { get; set; }
 
-        public async Task GetKeyInfoAsync(string realm)
+        public ManagementKeykloackController(IAttackDetection attackDetection)
         {
-            // var clients = await _client.GetClientsAsync(realm);
-            // (string clientId, string attribute) = clients
-            //     .Where(x => x.Attributes.Any())
-            //     .Select(client => (client.Id, client.Attributes.FirstOrDefault().Key))
-            //     .FirstOrDefault();
-            // if (clientId != null)
-            // {
-            //     var result = await _client.GetKeyInfoAsync(realm, clientId, attribute);
-            //     Assert.NotNull(result);
-            // }
+            AttackDetection = attackDetection;
+        }
+        [Authorize(Policy = "administrador")]
+        public async Task<bool> ClearUserLoginFailuresAsync(string realm)
+        {
+            return await AttackDetection.ClearUserLoginFailuresAsync(realm);
         }
 
 

@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Models.Common;
 using Keycloak.Net.Models.IdentityProviders;
 
 namespace Keycloak.Net.IdentityProviders
 {
-    public  class IdentityProviders: KeycloakClient
+    public class IdentityProviders : KeycloakClient, IIdentityProviders
     {
-        public IdentityProviders(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public IdentityProviders(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<IDictionary<string, object>> ImportIdentityProviderAsync(string realm, string input) => await GetBaseUrl(realm)
             .AppendPathSegment($"/admin/realms/{realm}/identity-provider/import-config")

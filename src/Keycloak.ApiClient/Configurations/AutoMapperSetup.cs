@@ -1,5 +1,8 @@
 ﻿using System;
 using AutoMapper;
+using Keycloak.Authentication.Clients;
+using Keycloak.Net.AttackDetection;
+using Keycloak.Net.AuthenticationManagement;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -18,6 +21,9 @@ namespace Keycloak.ApiClient.Configurations
           // Registering Mappings automatically only works if the
           // Automapper Profile classes are in ASP.NET project
           AutoMapperConfig.RegisterMappings();
+
       }
+
+
   }
 }

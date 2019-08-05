@@ -6,16 +6,8 @@ using Keycloak.Net.Models.ProtocolMappers;
 
 namespace Keycloak.Net.ProtocolMappers
 {
-    public class ProtocolMappers : KeycloakClient
+    public class ProtocolMappers : KeycloakClient, IProtocolMappers
     {
-        public ProtocolMappers(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public ProtocolMappers(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
-
         public async Task<bool> CreateMultipleProtocolMappersAsync(string realm, string clientScopeId, IEnumerable<ProtocolMapper> protocolMapperRepresentations)
         {
             var response = await GetBaseUrl(realm)

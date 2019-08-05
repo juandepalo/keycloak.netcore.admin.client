@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http;
 using Keycloak.Net.Models.Components;
 
 namespace Keycloak.Net.Components
 {
-    public class Components : KeycloakClient
+    public class Components : KeycloakClient, IComponents
     {
-        public Components(string url, string userName, string password) : base(url, userName, password)
-        {
-        }
-
-        public Components(string url, Func<string> getToken) : base(url, getToken)
-        {
-        }
 
         public async Task<bool> CreateComponentAsync(string realm, Component componentRepresentation)
         {

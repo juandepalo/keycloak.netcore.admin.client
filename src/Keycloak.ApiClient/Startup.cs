@@ -1,31 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Keycloak.ApiClient.Configurations;
 using Keycloak.ApiClient.Models;
 using Keycloak.Authentication;
+using Keycloak.Authentication.Clients;
 using Keycloak.Authentication.Configuration;
 using Keycloak.Authentication.Handlers.Requirements;
 using Keycloak.Authentication.Policies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Keycloak.Net.AttackDetection;
+using Keycloak.Net.AuthenticationManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.AspNetCore;
+
 
 namespace Keycloak.ApiClient
 {
@@ -102,6 +94,13 @@ namespace Keycloak.ApiClient
             );
 
             #endregion
+
+            #region Injeccion
+            services.AddScoped<IKeycloakClient, KeycloakClient>();
+            services.AddScoped<IAttackDetection, AttackDetection>();
+            services.AddScoped<IAuthenticationManagement, AuthenticationManagement>();
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

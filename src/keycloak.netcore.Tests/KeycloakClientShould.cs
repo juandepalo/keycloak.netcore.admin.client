@@ -1,17 +1,9 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
-using Keycloak.Net.Root;
-using Keycloak.Net.AttackDetection;
 namespace Keycloak.Net.Tests
 {
     public class KeycloakClientShould
     {
-        public string Url { get; set; }
-
-        public string UserName { get; set; }
-
-        public string Password { get; set; }
-
         public static AttackDetection.AttackDetection AttackDetectionClient { get; set; }
         public static AuthenticationManagement.AuthenticationManagement AuthenticationManagementClient { get; set; }
         public static ClientAttributeCertificate.ClientAttributeCertificate ClientAttributeCertificateClient { get; set; }
@@ -35,56 +27,49 @@ namespace Keycloak.Net.Tests
         public static UserStorageProvider.UserStorageProvider UserStorageProviderClient { get; set; }
         public KeycloakClientShould()
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
-
-            Url = configuration["url"];
-            UserName = configuration["userName"];
-            Password = configuration["password"];
+            
             if (AttackDetectionClient == null)
-                AttackDetectionClient = new AttackDetection.AttackDetection(Url, UserName, Password);
+                AttackDetectionClient = new AttackDetection.AttackDetection();
             if (AuthenticationManagementClient == null)
-                AuthenticationManagementClient = new AuthenticationManagement.AuthenticationManagement(Url, UserName, Password);
+                AuthenticationManagementClient = new AuthenticationManagement.AuthenticationManagement();
             if (ClientAttributeCertificateClient == null)
-                ClientAttributeCertificateClient = new ClientAttributeCertificate.ClientAttributeCertificate(Url, UserName, Password);
+                ClientAttributeCertificateClient = new ClientAttributeCertificate.ClientAttributeCertificate();
             if (ClientInitialAccessClient == null)
-                ClientInitialAccessClient = new ClientInitialAccess.ClientInitialAccess(Url, UserName, Password);
+                ClientInitialAccessClient = new ClientInitialAccess.ClientInitialAccess();
             if (ClientRegistrationPolicyClient == null)
-                ClientRegistrationPolicyClient = new ClientRegistrationPolicy.ClientRegistrationPolicy(Url, UserName, Password);
+                ClientRegistrationPolicyClient = new ClientRegistrationPolicy.ClientRegistrationPolicy();
             if (ClientRoleMappingsClient == null)
-                ClientRoleMappingsClient = new ClientRoleMappings.ClientRoleMappings(Url, UserName, Password);
+                ClientRoleMappingsClient = new ClientRoleMappings.ClientRoleMappings();
             if (ClientsClient == null)
-                ClientsClient = new Clients.Clients(Url, UserName, Password);
+                ClientsClient = new Clients.Clients();
             if (ClientScopesClient == null)
-                ClientScopesClient = new ClientScopes.ClientScopes(Url, UserName, Password);
+                ClientScopesClient = new ClientScopes.ClientScopes();
             if (ComponentsClient == null)
-                ComponentsClient = new Components.Components(Url, UserName, Password);
+                ComponentsClient = new Components.Components();
             if (GroupsClient == null)
-                GroupsClient = new Groups.Groups(Url, UserName, Password);
+                GroupsClient = new Groups.Groups();
             if (IdentityProvidersClient == null)
-                IdentityProvidersClient = new IdentityProviders.IdentityProviders(Url, UserName, Password);
+                IdentityProvidersClient = new IdentityProviders.IdentityProviders();
             if (KeyClient == null)
-                KeyClient = new Key.Key(Url, UserName, Password);
+                KeyClient = new Key.Key();
             if (ProtocolMappersClient == null)
-                ProtocolMappersClient = new ProtocolMappers.ProtocolMappers(Url, UserName, Password);
+                ProtocolMappersClient = new ProtocolMappers.ProtocolMappers();
             if (RealmsAdminClient == null)
-                RealmsAdminClient = new RealmsAdmin.RealmsAdmin(Url, UserName, Password);
+                RealmsAdminClient = new RealmsAdmin.RealmsAdmin();
             if (RoleMapperClient == null)
-                RoleMapperClient = new RoleMapper.RoleMapper(Url, UserName, Password);
+                RoleMapperClient = new RoleMapper.RoleMapper();
             if (RolesClient == null)
-                RolesClient = new Roles.Roles(Url, UserName, Password);
+                RolesClient = new Roles.Roles();
             if (RolesByIdClient == null)
-                RolesByIdClient = new RolesById.RolesById(Url, UserName, Password);
+                RolesByIdClient = new RolesById.RolesById();
             if (RootClient == null)
-                RootClient = new Root.Root(Url, UserName, Password);
+                RootClient = new Root.Root();
             if (ScopeMappingsClient == null)
-                ScopeMappingsClient = new ScopeMappings.ScopeMappings(Url, UserName, Password);
+                ScopeMappingsClient = new ScopeMappings.ScopeMappings();
             if (UsersClient == null)
-                UsersClient = new Users.Users(Url, UserName, Password);
+                UsersClient = new Users.Users();
             if (UserStorageProviderClient == null)
-                UserStorageProviderClient = new UserStorageProvider.UserStorageProvider(Url, UserName, Password);
+                UserStorageProviderClient = new UserStorageProvider.UserStorageProvider();
         }
     }
 }
