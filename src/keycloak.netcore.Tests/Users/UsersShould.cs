@@ -4,8 +4,17 @@ using Xunit;
 
 namespace Keycloak.Net.Tests
 {
-    public class UsersShould : KeycloakClientShould
+    public class UsersShould
     {
+
+        private Users.Users _client;
+
+        public UsersShould()
+        {
+            KeycloakClientShould keycloakClientShould = new KeycloakClientShould();
+            _client = new Users.Users(keycloakClientShould.Url, keycloakClientShould.UserName, keycloakClientShould.Password);
+        }
+
         [Theory]
         [InlineData("Insurance")]
         public async Task GetUsersAsync(string realm)

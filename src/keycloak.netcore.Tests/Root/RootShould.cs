@@ -9,7 +9,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetServerInfoAsync(string realm)
         {
-            var result = await _client.GetServerInfoAsync(realm);
+            var result = await RootClient.GetServerInfoAsync(realm);
             Assert.NotNull(result);
         }
 
@@ -17,7 +17,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task CorsPreflightAsync(string realm)
         {
-            bool? result = await _client.CorsPreflightAsync(realm);
+            bool? result = await RootClient.CorsPreflightAsync(realm);
             Assert.True(result);
         }
     }

@@ -10,7 +10,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetGroupHierarchyAsync(string realm)
         {
-            var result = await _client.GetGroupHierarchyAsync(realm);
+            var result = await GroupsClient.GetGroupHierarchyAsync(realm);
             Assert.NotNull(result);
         }
 
@@ -18,7 +18,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetGroupsCountAsync(string realm)
         {
-            int? result = await _client.GetGroupsCountAsync(realm);
+            int? result = await GroupsClient.GetGroupsCountAsync(realm);
             Assert.True(result >= 0);
         }
 
@@ -26,11 +26,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetGroupAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetGroupAsync(realm, groupId);
+                var result = await GroupsClient.GetGroupAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -39,11 +39,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetGroupClientAuthorizationPermissionsInitializedAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetGroupClientAuthorizationPermissionsInitializedAsync(realm, groupId);
+                var result = await GroupsClient.GetGroupClientAuthorizationPermissionsInitializedAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -52,11 +52,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetGroupUsersAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetGroupUsersAsync(realm, groupId);
+                var result = await GroupsClient.GetGroupUsersAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }

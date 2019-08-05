@@ -9,7 +9,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetKeysAsync(string realm)
         {
-            var result = await _client.GetKeysAsync(realm);
+            var result = await KeyClient.GetKeysAsync(realm);
             Assert.NotNull(result);
         }
     }

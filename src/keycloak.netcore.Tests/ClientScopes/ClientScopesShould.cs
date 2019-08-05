@@ -10,7 +10,7 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetClientScopesAsync(string realm)
         {
-            var result = await _client.GetClientScopesAsync(realm);
+            var result = await ClientScopesClient.GetClientScopesAsync(realm);
             Assert.NotNull(result);
         }
 
@@ -18,11 +18,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetClientScopeAsync(string realm)
         {
-            var clientScopes = await _client.GetClientScopesAsync(realm);
+            var clientScopes = await ClientScopesClient.GetClientScopesAsync(realm);
             string clientScopeId = clientScopes.FirstOrDefault()?.Id;
             if (clientScopeId != null)
             {
-                var result = await _client.GetClientScopeAsync(realm, clientScopeId);
+                var result = await ClientScopesClient.GetClientScopeAsync(realm, clientScopeId);
                 Assert.NotNull(result);
             }
         }

@@ -10,11 +10,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetRoleMappingsForGroupAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetRoleMappingsForGroupAsync(realm, groupId);
+                var result = await RoleMapperClient.GetRoleMappingsForGroupAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -23,11 +23,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetRealmRoleMappingsForGroupAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetRealmRoleMappingsForGroupAsync(realm, groupId);
+                var result = await RoleMapperClient.GetRealmRoleMappingsForGroupAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -36,11 +36,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetAvailableRealmRoleMappingsForGroupAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetAvailableRealmRoleMappingsForGroupAsync(realm, groupId);
+                var result = await RoleMapperClient.GetAvailableRealmRoleMappingsForGroupAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -49,11 +49,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetEffectiveRealmRoleMappingsForGroupAsync(string realm)
         {
-            var groups = await _client.GetGroupHierarchyAsync(realm);
+            var groups = await GroupsClient.GetGroupHierarchyAsync(realm);
             string groupId = groups.FirstOrDefault()?.Id;
             if (groupId != null)
             {
-                var result = await _client.GetEffectiveRealmRoleMappingsForGroupAsync(realm, groupId);
+                var result = await RoleMapperClient.GetEffectiveRealmRoleMappingsForGroupAsync(realm, groupId);
                 Assert.NotNull(result);
             }
         }
@@ -62,11 +62,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetRoleMappingsForUserAsync(string realm)
         {
-            var users = await _client.GetUsersAsync(realm);
+            var users = await UsersClient.GetUsersAsync(realm);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetRoleMappingsForUserAsync(realm, userId);
+                var result = await RoleMapperClient.GetRoleMappingsForUserAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
@@ -75,11 +75,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetRealmRoleMappingsForUserAsync(string realm)
         {
-            var users = await _client.GetUsersAsync(realm);
+            var users = await UsersClient.GetUsersAsync(realm);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetRealmRoleMappingsForUserAsync(realm, userId);
+                var result = await RoleMapperClient.GetRealmRoleMappingsForUserAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
@@ -88,11 +88,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetAvailableRealmRoleMappingsForUserAsync(string realm)
         {
-            var users = await _client.GetUsersAsync(realm);
+            var users = await UsersClient.GetUsersAsync(realm);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetAvailableRealmRoleMappingsForUserAsync(realm, userId);
+                var result = await RoleMapperClient.GetAvailableRealmRoleMappingsForUserAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
@@ -101,11 +101,11 @@ namespace Keycloak.Net.Tests
         [InlineData("Insurance")]
         public async Task GetEffectiveRealmRoleMappingsForUserAsync(string realm)
         {
-            var users = await _client.GetUsersAsync(realm);
+            var users = await UsersClient.GetUsersAsync(realm);
             string userId = users.FirstOrDefault()?.Id;
             if (userId != null)
             {
-                var result = await _client.GetEffectiveRealmRoleMappingsForUserAsync(realm, userId);
+                var result = await RoleMapperClient.GetEffectiveRealmRoleMappingsForUserAsync(realm, userId);
                 Assert.NotNull(result);
             }
         }
