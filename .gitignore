@@ -339,3 +339,7 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /src/keycloak.netcore.Tests/appsettings.json
+keycloak-imports/realm-demo-roles-winby.json
+src/.vscode/tasks.json
+src/.vscode/launch.json
+src/Keycloak.ApiClient/appsettings.json

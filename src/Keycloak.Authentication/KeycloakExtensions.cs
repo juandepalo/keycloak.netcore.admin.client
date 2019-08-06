@@ -1,18 +1,12 @@
 ﻿using Keycloak.Authentication.Clients;
 using Keycloak.Authentication.Configuration;
 using Keycloak.Authentication.Handlers;
-using Keycloak.Authentication.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 
 namespace Keycloak.Authentication
 {
@@ -38,7 +32,7 @@ namespace Keycloak.Authentication
 
             #region PASOS 1 Y 2 (ENVIO Y REFRESCO DE TOKEN)
 
-            if(options.EnableGetTokenAuto || options.EnableRefreshToken)
+            if (options.EnableGetTokenAuto || options.EnableRefreshToken)
             {
                 services.AddHttpContextAccessor();
                 services.AddSession(config => config.Cookie.Name = options.ClientId);
@@ -92,7 +86,7 @@ namespace Keycloak.Authentication
         {
             #region PASOS 1 Y 2 (ENVIO Y REFRESCO DE TOKEN)
 
-            if(_enableGetTokenAuto || _enableRefreshToken)
+            if (_enableGetTokenAuto || _enableRefreshToken)
             {
                 builder.UseSession();
             }
